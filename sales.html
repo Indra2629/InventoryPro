@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>InventoryPro - Sales Management</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        <i class="fas fa-chart-line"></i>
+        <h2>InventoryPro</h2>
+      </div>
+      <ul class="nav-links">
+        <li>
+          <a href="index.html">
+            <i class="fas fa-tachometer-alt"></i>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="inventory.html">
+            <i class="fas fa-boxes"></i>
+            <span>Inventory</span>
+          </a>
+        </li>
+        <li class="active">
+          <a href="sales.html">
+            <i class="fas fa-shopping-cart"></i>
+            <span>Sales</span>
+          </a>
+        </li>
+        <li>
+          <a href="customers.html">
+            <i class="fas fa-users"></i>
+            <span>Customers</span>
+          </a>
+        </li>
+        <li>
+          <a href="reports.html">
+            <i class="fas fa-chart-bar"></i>
+            <span>Reports</span>
+          </a>
+        </li>
+        <li>
+          <a href="settings.html">
+            <i class="fas fa-cog"></i>
+            <span>Settings</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Top Header -->
+      <header class="top-header">
+        <div class="header-left">
+          <h1>Sales Management</h1>
+          <p>Record sales transactions, manage customer orders, and track revenue performance.</p>
+        </div>
+        <div class="header-right">
+          <div class="search-bar">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Search sales...">
+          </div>
+          <button class="btn btn-primary" onclick="showAddSaleModal()">
+            <i class="fas fa-plus"></i>
+            New Sale
+          </button>
+        </div>
+      </header>
+
+      <!-- Sales Stats -->
+      <section class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-icon">
+            <i class="fas fa-shopping-cart"></i>
+          </div>
+          <div class="metric-content">
+            <h3>Total Sales</h3>
+            <p class="metric-value" id="totalSalesCount">0</p>
+            <span class="metric-change positive">All time sales</span>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-icon">
+            <i class="fas fa-indian-rupee-sign"></i>
+          </div>
+          <div class="metric-content">
+            <h3>Total Revenue</h3>
+            <p class="metric-value" id="totalRevenueAmount">₹0</p>
+            <span class="metric-change positive">All time revenue</span>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-icon">
+            <i class="fas fa-calendar-day"></i>
+          </div>
+          <div class="metric-content">
+            <h3>Today's Sales</h3>
+            <p class="metric-value" id="todaySales">0</p>
+            <span class="metric-change positive">Today's transactions</span>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-icon">
+            <i class="fas fa-users"></i>
+          </div>
+          <div class="metric-content">
+            <h3>Customers</h3>
+            <p class="metric-value" id="totalCustomers">0</p>
+            <span class="metric-change positive">Active customers</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Add Sale Form -->
+      <div class="form-container" id="addSaleForm" style="display: none;">
+        <div class="form-header">
+          <h3><i class="fas fa-plus"></i> Record New Sale</h3>
+          <button class="btn btn-secondary" onclick="hideAddSaleForm()">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <form id="salesForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="saleProduct">Product *</label>
+              <select id="saleProduct" name="saleProduct" class="form-control" required>
+                <option value="">Select a product</option>
+                <!-- Products will be populated by JavaScript -->
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="quantity">Quantity *</label>
+              <input type="number" id="quantity" name="quantity" class="form-control" placeholder="1" min="1" required>
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="customerName">Customer Name</label>
+              <input type="text" id="customerName" name="customerName" class="form-control" placeholder="Walk-in Customer">
+            </div>
+            <div class="form-group">
+              <label for="paymentMethod">Payment Method</label>
+              <select id="paymentMethod" name="paymentMethod" class="form-control">
+                <option value="Cash">Cash</option>
+                <option value="Card">Card</option>
+                <option value="UPI">UPI</option>
+                <option value="Net Banking">Net Banking</option>
+                <option value="Cheque">Cheque</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="unitPrice">Unit Price (₹)</label>
+              <input type="number" id="unitPrice" name="unitPrice" class="form-control" placeholder="0.00" step="0.01" readonly>
+            </div>
+            <div class="form-group">
+              <label for="totalPrice">Total Price (₹)</label>
+              <input type="number" id="totalPrice" name="totalPrice" class="form-control" placeholder="0.00" step="0.01" readonly>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="notes">Notes</label>
+            <textarea id="notes" name="notes" class="form-control" rows="2" placeholder="Additional notes about the sale"></textarea>
+          </div>
+          
+          <div class="form-buttons">
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-save"></i>
+              Record Sale
+            </button>
+            <button type="button" class="btn btn-secondary" onclick="hideAddSaleForm()">
+              <i class="fas fa-times"></i>
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Sales Table -->
+      <div class="table-container">
+        <div class="table-header">
+          <h3><i class="fas fa-list"></i> Recent Sales</h3>
+          <div class="table-controls">
+            <input type="text" placeholder="Filter sales..." class="form-control" id="salesFilter">
+            <select class="form-control" id="dateFilter">
+              <option value="all">All Time</option>
+              <option value="today">Today</option>
+              <option value="week">This Week</option>
+              <option value="month">This Month</option>
+            </select>
+            <button class="btn btn-secondary" onclick="exportSales()">
+              <i class="fas fa-download"></i>
+              Export
+            </button>
+          </div>
+        </div>
+        
+        <div class="sales-list" id="salesList">
+          <!-- Sales items will be populated by JavaScript -->
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
