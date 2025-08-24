@@ -2,6 +2,8 @@
 
 A modern, responsive web application for managing inventory, tracking sales, and monitoring business performance.
 
+website link: https://indra2629.github.io/InventoryPro/
+
 ## Features
 
 ### 🏪 Inventory Management
@@ -171,4 +173,5 @@ This project is open source and available under the MIT License.
 ---
 
 **Note**: This is a client-side application that runs entirely in your browser. No server or internet connection is required for basic functionality.
+
 
